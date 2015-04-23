@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Kinect;
 namespace Gestureslib
 {
-    class EnlargeGestures
+    class EnlargeGestures:IGesture
     {
         private const double HandRaiseUpThreadhold = 0.05f;
         private const double DistanceThreadhold=0.01;
@@ -15,7 +15,7 @@ namespace Gestureslib
         private GestureTracker _gesturetracker;
         private const double MaxScale = 10.0;
         public delegate void EnlargeEventHandler(object sender, EnlargeEventArgs e);
-        public event EnlargeEventHandler EnlargeGestureDetected;
+        public static event EnlargeEventHandler GestureDetected;
         
         public class EnlargeEventArgs:EventArgs
         {
@@ -26,7 +26,7 @@ namespace Gestureslib
             }
         }
 
-        public void Update(Body body)
+        public void Update(Body body,long timestamp)
         {
             if(body!=null&&body.IsTracked)
             {         
@@ -57,8 +57,8 @@ namespace Gestureslib
                 if(gesturetracker.gesturestate==GestureState.NONE)
                 {
                     gesturetracker.UpdateState(GestureState.SUCCED, dis,body.TrackingId);
-                    if(EnlargeGestureDetected!=null)
-                         EnlargeGestureDetected(this, new EnlargeEventArgs(gesturetracker.scaleindex));
+                    if(GestureDetected!=null)
+                         GestureDetected(this, new EnlargeEventArgs(gesturetracker.scaleindex));
                 }
                 else
                 {
@@ -69,8 +69,8 @@ namespace Gestureslib
                         scaleindex = scaleindex > MaxScale ? 10.0 : scaleindex;
 
                         gesturetracker.UpdateDisAndScale(dis, scaleindex);
-                        if (EnlargeGestureDetected != null)
-                            EnlargeGestureDetected(this, new EnlargeEventArgs(gesturetracker.scaleindex));
+                        if (GestureDetected != null)
+                            GestureDetected(this, new EnlargeEventArgs(gesturetracker.scaleindex));
                     }
                 }
             }

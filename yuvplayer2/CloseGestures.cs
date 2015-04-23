@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 using Microsoft.Kinect;
 namespace Gestureslib
 {
-    class CloseGestures
+    class CloseGestures:IGesture
     {
         public delegate void CloseEventHandler(object sender, CloseEventArs e);
-        public event CloseEventHandler CloseGestureDetected;
+        public static event CloseEventHandler GestureDetected;
         private CloseGestureTracker gestureTracker;
         private const double HandStrechThreadholdX = 0.30f;
         private const double HandStrechThreadholdY = 0.30f;
@@ -58,27 +58,27 @@ namespace Gestureslib
                     if (gestureTracker.gesturestate == CloseGestureState.INPROGRESS && gestureTracker.timestamp + CLOSE_THREADHOLD < timestamp)
                     {
                         gestureTracker.UpdateState(CloseGestureState.SUCCEED, body.TrackingId, timestamp);
-                        if (CloseGestureDetected != null)
-                            CloseGestureDetected(this, new CloseEventArs(gestureTracker.gesturestate, 0));
+                        if (GestureDetected != null)
+                            GestureDetected(this, new CloseEventArs(gestureTracker.gesturestate, 0));
                     }
                     else if (gestureTracker.gesturestate != CloseGestureState.INPROGRESS)
                     {
                         gestureTracker.UpdateState(CloseGestureState.INPROGRESS, body.TrackingId, timestamp);
                         long timeremain = CLOSE_THREADHOLD - (timestamp - gestureTracker.timestamp);
-                        if (CloseGestureDetected != null)
-                            CloseGestureDetected(this, new CloseEventArs(gestureTracker.gesturestate, CLOSE_THREADHOLD));
+                        if (GestureDetected != null)
+                            GestureDetected(this, new CloseEventArs(gestureTracker.gesturestate, CLOSE_THREADHOLD));
                     }
 
                     long timeleft = CLOSE_THREADHOLD - (timestamp - gestureTracker.timestamp);
                     if(timeleft==2000)
                     {
-                        if (CloseGestureDetected != null)
-                            CloseGestureDetected(this, new CloseEventArs(gestureTracker.gesturestate, timeleft));
+                        if (GestureDetected != null)
+                            GestureDetected(this, new CloseEventArs(gestureTracker.gesturestate, timeleft));
                     }
                     else if(timeleft==1000)
                     {
-                        if (CloseGestureDetected != null)
-                            CloseGestureDetected(this, new CloseEventArs(gestureTracker.gesturestate, timeleft));
+                        if (GestureDetected != null)
+                            GestureDetected(this, new CloseEventArs(gestureTracker.gesturestate, timeleft));
                     }
                    
                 }
@@ -86,8 +86,8 @@ namespace Gestureslib
                 {
                     if(gestureTracker.gesturestate!=CloseGestureState.NONE)
                     {
-                        if (CloseGestureDetected != null)
-                            CloseGestureDetected(this, new CloseEventArs(CloseGestureState.NONE, 0));
+                        if (GestureDetected != null)
+                            GestureDetected(this, new CloseEventArs(CloseGestureState.NONE, 0));
                     }
                     gestureTracker.Reset();
                 }
@@ -96,8 +96,8 @@ namespace Gestureslib
             {
                 if (gestureTracker.gesturestate != CloseGestureState.NONE)
                 {
-                    if (CloseGestureDetected != null)
-                        CloseGestureDetected(this, new CloseEventArs(CloseGestureState.NONE, 0));
+                    if (GestureDetected != null)
+                        GestureDetected(this, new CloseEventArs(CloseGestureState.NONE, 0));
                 }
                 gestureTracker.Reset();
             }

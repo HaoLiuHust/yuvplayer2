@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using Microsoft.Kinect;
 namespace Gestureslib
 {
-    class CircleControlGestures
+    class CircleControlGestures:IGesture
     {
         public delegate void CircleEventHandler(object sender, CircleEventArgs e);
-        public event CircleEventHandler CircleGestureDetected;
+        public static event CircleEventHandler GestureDetected;
         private CircleGestureTracker _circleTracker;
         private const double HandRaiseUpThreadhold = 0.05;
         private const double CtrlThreahold = 0.005f;
@@ -22,7 +22,7 @@ namespace Gestureslib
             }
         }
 
-        public void Update(Body body)
+        public void Update(Body body,long timestamp)
         {
             if(body!=null&&body.IsTracked)
             {
@@ -52,8 +52,8 @@ namespace Gestureslib
                 {
                     _circleTracker.UpdateAllState(CircleGestureState.START, body.TrackingId,handright.Position, handright.Position); 
                 }
-                if (CircleGestureDetected != null)
-                    CircleGestureDetected(this, new CircleEventArgs(_circleTracker._gesturestate));
+                if (GestureDetected != null)
+                    GestureDetected(this, new CircleEventArgs(_circleTracker._gesturestate));
             }
             else
             {
@@ -72,14 +72,14 @@ namespace Gestureslib
                            if (dirflag > 0)
                            {
                                _circleTracker.UpdateState(CircleGestureState.FORWARD, currentpos);
-                               if(CircleGestureDetected!=null)
-                                     CircleGestureDetected(this, new CircleEventArgs(CircleGestureState.FORWARD));
+                               if(GestureDetected!=null)
+                                     GestureDetected(this, new CircleEventArgs(CircleGestureState.FORWARD));
                            }
                            else
                            {
                                _circleTracker.UpdateState(CircleGestureState.BACKWARD, currentpos);
-                               if (CircleGestureDetected != null)                               
-                                    CircleGestureDetected(this, new CircleEventArgs(CircleGestureState.BACKWARD));                               
+                               if (GestureDetected != null)                               
+                                    GestureDetected(this, new CircleEventArgs(CircleGestureState.BACKWARD));                               
                            }
 
                        }
@@ -88,14 +88,14 @@ namespace Gestureslib
                            if (dirflag > 0)
                            {
                                _circleTracker.UpdateState(CircleGestureState.BACKWARD, currentpos);
-                               if (CircleGestureDetected != null)                               
-                                    CircleGestureDetected(this, new CircleEventArgs(CircleGestureState.BACKWARD));                               
+                               if (GestureDetected != null)                               
+                                    GestureDetected(this, new CircleEventArgs(CircleGestureState.BACKWARD));                               
                            }
                            else
                            {
                                _circleTracker.UpdateState(CircleGestureState.FORWARD, currentpos);
-                               if (CircleGestureDetected != null)
-                                   CircleGestureDetected(this, new CircleEventArgs(CircleGestureState.FORWARD));                                                             
+                               if (GestureDetected != null)
+                                   GestureDetected(this, new CircleEventArgs(CircleGestureState.FORWARD));                                                             
                            }
                        }
                    }
@@ -103,9 +103,9 @@ namespace Gestureslib
                 else
                 {
                     _circleTracker.Reset();
-                    if (CircleGestureDetected != null)
+                    if (GestureDetected != null)
                     {
-                        CircleGestureDetected(this, new CircleEventArgs(_circleTracker._gesturestate));
+                        GestureDetected(this, new CircleEventArgs(_circleTracker._gesturestate));
                     }
                 }
             }                    

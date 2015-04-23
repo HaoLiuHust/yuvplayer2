@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Microsoft.Kinect;
-namespace yuvplayer2
+namespace Gestureslib
 {
     interface IGesture
     {
-        void Update(Body body, BodyFrame bframe = null);
+        void Update(Body body, long timestamp=0);
     }
 }

@@ -53,7 +53,7 @@ namespace yuvplayer2
         #endregion args
 
         KinectControl kinectcontrol;
-        private Gestures _gestures;
+        //private Gestures _gestures;
         public Body[] Bodies;
         //配置文件路径
         private const string cfgpath = "video.cfg";
@@ -128,12 +128,15 @@ namespace yuvplayer2
             height = System.Int32.Parse(strsplit[1]);
             OpenFile(videopath);
             KinectProcess();
-            _gestures = new Gestures();
-            //注册手势事件
-            _gestures._enlargeGestures.EnlargeGestureDetected += _EnlargeGestures_EnlargeGestureDetected;
-            _gestures._exitGestures.ExitDetected += _exitGestures_ExitDetected;
-            _gestures._circleGestures.CircleGestureDetected += _circleGestures_CircleGestureDetected;
-            _gestures._closeGestures.CloseGestureDetected += _closeGestures_CloseGestureDetected;
+            Gestures.AddGesture(SupportedGestures.ENLARGE);
+            Gestures.AddGesture(SupportedGestures.CLOSE);
+            Gestures.AddGesture(SupportedGestures.CIRCLE);
+            Gestures.AddGesture(SupportedGestures.EXIT);
+            EnlargeGestures.GestureDetected += _EnlargeGestures_EnlargeGestureDetected;
+            CloseGestures.GestureDetected += _closeGestures_CloseGestureDetected;
+            ExitGetures.GestureDetected += _exitGestures_ExitDetected;
+            CircleControlGestures.GestureDetected += _circleGestures_CircleGestureDetected;
+            Gestures.CreateGestures();
         }
 
        
@@ -165,10 +168,8 @@ namespace yuvplayer2
                         bdframe.BodyFrameSource.OverrideHandTracking(bodyselected.TrackingId);
                     if(imageviewer!=null&&!imageviewer.IsDisposed)
                     {
-                        _gestures._enlargeGestures.Update(bodyselected);
-                        _gestures._exitGestures.Update(bodyselected);
-                        _gestures._circleGestures.Update(bodyselected);
-                        _gestures._closeGestures.Update(bodyselected, (long)bdframe.RelativeTime.TotalMilliseconds);
+                        foreach (var s in Gestures.gesturelist)
+                            s.Update(bodyselected, (long)bdframe.RelativeTime.TotalMilliseconds);
                     }                  
                 }
             }
@@ -396,13 +397,18 @@ namespace yuvplayer2
             {
                 if (kinectcontrol.bfReader != null)
                     kinectcontrol.bfReader.FrameArrived -= bfReader_FrameArrived;
-                if (_gestures != null)
+                foreach(var s in Gestures.gesturelist)
                 {
-                    _gestures._enlargeGestures.EnlargeGestureDetected -= _exitGestures_ExitDetected;
-                    _gestures._circleGestures.CircleGestureDetected -= _circleGestures_CircleGestureDetected;
-                    _gestures._closeGestures.CloseGestureDetected -= _closeGestures_CloseGestureDetected;
-                    _gestures._exitGestures.ExitDetected -= _exitGestures_ExitDetected;
+                    Gestures.gesturelist.Remove(s);
                 }
+                foreach(var s in Gestures.gestureset)
+                {
+                    Gestures.gestureset.Remove(s);
+                }
+                EnlargeGestures.GestureDetected -= _EnlargeGestures_EnlargeGestureDetected;
+                ExitGetures.GestureDetected -= _exitGestures_ExitDetected;
+                CloseGestures.GestureDetected -= _closeGestures_CloseGestureDetected;
+                CircleControlGestures.GestureDetected -= _circleGestures_CircleGestureDetected;
                 imageviewer.Close();
                 imageviewer.Dispose();
             }

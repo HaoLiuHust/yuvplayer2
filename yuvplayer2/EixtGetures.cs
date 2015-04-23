@@ -8,11 +8,11 @@ using Microsoft.Kinect;
 namespace Gestureslib
 {
    
-    class ExitGetures
+    class ExitGetures:IGesture
     {
-        public event EventHandler ExitDetected;
+        public static event EventHandler GestureDetected;
 
-        public void Update(Body body)
+        public void Update(Body body,long timestamp)
         {
             if(body!=null&&body.IsTracked)
             {
@@ -20,16 +20,16 @@ namespace Gestureslib
             }
             else
             {
-                if (ExitDetected != null)
-                    ExitDetected(this, new EventArgs());
+                if (GestureDetected != null)
+                    GestureDetected(this, new EventArgs());
             }
         }
         private void TrackExit(Body body)
         {
             if (body.Joints[JointType.HandRight].Position.Y - body.Joints[JointType.HipRight].Position.Y < 0.05)
             {
-                if(ExitDetected!=null)
-                    ExitDetected(this, new EventArgs());
+                if(GestureDetected!=null)
+                    GestureDetected(this, new EventArgs());
             }
         }
     }
