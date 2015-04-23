@@ -1,0 +1,16 @@
+﻿生成启动时间为 2014-12-19 10:42:32。
+     1>项目“I:\projectsC#\yuvplayer\imageop\imageop.vcxproj”在节点 2 上(Rebuild 个目标)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D _WINDLL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt imageop.cpp
+         imageop.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"I:\projectsC#\yuvplayer\Release\imageop.dll" /NOLOGO opencv_calib3d248.lib opencv_contrib248.lib opencv_core248.lib opencv_features2d248.lib opencv_flann248.lib opencv_gpu248.lib opencv_highgui248.lib opencv_imgproc248.lib opencv_legacy248.lib opencv_ml248.lib opencv_objdetect248.lib opencv_ts248.lib opencv_video248.lib avcodec.lib avformat.lib avdevice.lib avfilter.lib avutil.lib postproc.lib swresample.lib swscale.lib kinect20.lib opencv_calib3d248d.lib opencv_contrib248d.lib opencv_core248d.lib opencv_features2d248d.lib opencv_flann248d.lib opencv_gpu248d.lib opencv_highgui248d.lib opencv_imgproc248d.lib opencv_legacy248d.lib opencv_ml248d.lib opencv_objdetect248d.lib opencv_ts248d.lib opencv_video248d.lib avcodec.lib avformat.lib avdevice.lib avfilter.lib avutil.lib postproc.lib swresample.lib swscale.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"I:\projectsC#\yuvplayer\Release\imageop.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"I:\projectsC#\yuvplayer\Release\imageop.lib" /MACHINE:X86 /SAFESEH /SAFESEH:NO /DLL Release\imageop.obj
+            正在创建库 I:\projectsC#\yuvplayer\Release\imageop.lib 和对象 I:\projectsC#\yuvplayer\Release\imageop.exp
+         正在生成代码
+         已完成代码的生成
+         imageop.vcxproj -> I:\projectsC#\yuvplayer\Release\imageop.dll
+     1>已完成生成项目“I:\projectsC#\yuvplayer\imageop\imageop.vcxproj”(Rebuild 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:08.99
