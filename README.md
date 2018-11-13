@@ -1,5 +1,5 @@
 # yuvplayer2
-完成对双视点yuv视频的播放，并用Kinectv2来操控  
-依赖Opencv2.x, Emgucv  
+play 2 yuv views, and use kinect2 to control it
+dependency: opencv2, emgucv
 
 play 2 views yuv
